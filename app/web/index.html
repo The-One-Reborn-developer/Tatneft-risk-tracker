@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Риск трекер</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <div id="container">
+        <div id="header">
+            <div id="monthDisplay"></div>
+            <div>
+                <button id="backButton">Пред. месяц ◀️</button>
+                <button id="nextButton">След. месяц ▶️</button>
+            </div>
+        </div>
+
+        <div id="weekdays">
+            <div>Понедельник</div>
+            <div>Вторник</div>
+            <div>Среда</div>
+            <div>Четверг</div>
+            <div>Пятница</div>
+            <div>Суббота</div>
+            <div>Воскресенье</div>
+        </div>
+
+        <div id="calendar"></div>
+    </div>
+
+    <div id="newEventModal">
+        <h2>Создание риска</h2>
+        <input id="eventTitleInput" placeholder="Название риска" />
+        <button id="saveButton">Сохранить</button>
+        <button id="cancelButton">Отмена</button>
+    </div>
+
+    <div id="closeEventModal">
+        <h2>Риск идентифицирован заранее</h2>
+
+        <p id="eventText"></p>
+        
+        <button id="closeButton">Закрыть</button>
+    </div>
+
+    <div id="modalBackDrop"></div>
+</body>
+</html>
