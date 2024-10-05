@@ -3,7 +3,7 @@ from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.add_telegram_id_unique_constraint import add_telegram_id_unique_constraint
 
 
-async def create_employees_table() -> bool:
+async def create_employees_table() -> bool | None:
     """
     Create 'employees' table if it doesn't exist.
 
@@ -33,7 +33,7 @@ async def create_employees_table() -> bool:
 
     Also adds a unique constraint on telegram_id to prevent duplicate entries.
 
-    Returns True if the table was created successfully, False otherwise.
+    Returns True if the table was created successfully, False otherwise, or None if an error occurred.
     """
     conn = await connect_to_database()
     try:
@@ -70,12 +70,12 @@ async def create_employees_table() -> bool:
 
         add_constraint_result = await add_telegram_id_unique_constraint()
 
-        if not add_constraint_result:
+        if add_constraint_result is None:
             return False
 
         return True
     except Exception as e:
         print(f"Error creating Employees table: {e}")
-        return False
+        return None
     finally:
         await close_connection(conn)

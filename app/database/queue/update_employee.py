@@ -7,7 +7,7 @@ async def update_employee(telegram_id: int,
                           is_in_antirating: bool | None = None,
                           has_one_rating_reset: bool | None = None,
                           was_a_good_fellow: bool | None = None,
-                          banned: bool | None = None) -> bool:
+                          banned: bool | None = None) -> bool | None:
     """
     Update an employee in the database.
 
@@ -20,7 +20,7 @@ async def update_employee(telegram_id: int,
         banned: Whether the employee is banned.
 
     Returns:
-        bool: True if the employee was updated successfully, False otherwise.
+        bool: True if the employee was updated successfully, None if an error occurred.
     """
     conn = await connect_to_database()
     try:
@@ -50,6 +50,6 @@ async def update_employee(telegram_id: int,
         return True
     except Exception as e:
         print(f"Error updating employee: {e}")
-        return False
+        return None
     finally:
         await close_connection(conn)

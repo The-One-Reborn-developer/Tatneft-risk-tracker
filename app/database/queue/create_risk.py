@@ -4,7 +4,7 @@ from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
 
-async def add_risk(risk) -> bool:
+async def create_risk(risk) -> bool | None:
     """
     Add a risk to the database.
 
@@ -26,7 +26,7 @@ async def add_risk(risk) -> bool:
     Returns
     -------
     bool
-        True if the risk was added successfully, False otherwise.
+        True if the risk was added successfully, None if an error occurred.
     """
     conn = await connect_to_database()
     # Convert discovery_date from string to datetime.date
@@ -50,10 +50,10 @@ async def add_risk(risk) -> bool:
             risk['request_number']
         )
 
-        print(f'Risk {risk["request_number"]} by {risk["telegram_id"]} discovered at {discovery_date} added successfully.')
+        print(f'Risk {risk["request_number"]} discovered by {risk["telegram_id"]} at {discovery_date} added successfully.')
         return True
     except Exception as e:
         print(f"Error adding risk: {e}")
-        return False
+        return None
     finally:
         await close_connection(conn)

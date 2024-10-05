@@ -1,17 +1,19 @@
 import asyncpg
 import os
 
+from typing import Optional
+
 from dotenv import load_dotenv, find_dotenv
 
 
-async def connect_to_database() -> asyncpg.connect | None:
+async def connect_to_database() -> Optional[asyncpg.connect]:
     """
     Connects to the PostgreSQL database using environment variables.
 
     The environment variables 'POSTGRES_DB', 'POSTGRES_USER', and
     'POSTGRES_PASSWORD' must be set.
 
-    Returns an asyncpg connection object.
+    Returns an asyncpg connection object if successful, None if an error occurred.
     """
     try:
         load_dotenv(find_dotenv())

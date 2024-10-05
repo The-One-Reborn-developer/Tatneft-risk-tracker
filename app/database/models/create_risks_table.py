@@ -2,7 +2,7 @@ from app.database.queue.close_connection import close_connection
 from app.database.queue.connect_to_database import connect_to_database
 
 
-async def create_risks_table() -> bool:
+async def create_risks_table() -> bool | None:
     """
     Create 'risks' table if it doesn't exist.
 
@@ -20,7 +20,7 @@ async def create_risks_table() -> bool:
     - request_number (INT) : IntraService ticket number
     - request_closed (BOOLEAN) with default value of FALSE
 
-    Returns True if the table was created successfully, False otherwise.
+    Returns True if the table was created successfully, None otherwise.
     """
     conn = await connect_to_database()
     try:
@@ -40,6 +40,7 @@ async def create_risks_table() -> bool:
                            id SERIAL PRIMARY KEY,
                            telegram_id INT REFERENCES employees(telegram_id) ON DELETE CASCADE,
                            discovery_date DATE,
+                           discovery_time TIME,
                            confirmation_date DATE DEFAULT NULL,
                            elimination_date DATE DEFAULT NULL,
                            risk_level INT DEFAULT 1,
@@ -55,6 +56,6 @@ async def create_risks_table() -> bool:
         return True
     except Exception as e:
         print(f"Error creating Risks table: {e}")
-        return False
+        return None
     finally:
         await close_connection(conn)

@@ -2,14 +2,14 @@ from app.database.queue.close_connection import close_connection
 from app.database.queue.connect_to_database import connect_to_database
 
 
-async def add_telegram_id_unique_constraint() -> bool:
+async def add_telegram_id_unique_constraint() -> bool | None:
     """
     Add a unique constraint on telegram_id in employees table.
 
     This function adds a unique constraint on telegram_id in the employees table.
     This ensures that there are no duplicate telegram_id's in the table.
 
-    Returns True if the unique constraint was added successfully, False if an error occurred.
+    Returns True if the unique constraint was added successfully, None if an error occurred.
     """
     conn = await connect_to_database()
     try:
@@ -21,6 +21,6 @@ async def add_telegram_id_unique_constraint() -> bool:
         return True
     except Exception as e:
         print(f"Error adding unique constraint: {e}")
-        return False
+        return None
     finally:
         await close_connection(conn)

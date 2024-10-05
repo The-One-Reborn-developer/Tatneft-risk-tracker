@@ -6,7 +6,7 @@ async def get_all_level_two_managers() -> list | None:
     """
     Get a list of all chat IDs of level two managers.
 
-    Returns a list of all chat IDs of level two managers if successful, None otherwise.
+    Returns a list of all chat IDs of level two managers if successful, None if an error occurred.
     """
     conn = await connect_to_database()
     try:

@@ -1,4 +1,4 @@
-async def close_connection(conn) -> bool:
+async def close_connection(conn) -> bool | None:
     """
     Closes the connection to the database.
 
@@ -6,11 +6,11 @@ async def close_connection(conn) -> bool:
         conn: The connection to be closed.
 
     Returns:
-        bool: True if the connection was closed successfully, False if an error occurred.
+        bool: True if the connection was closed successfully, None if an error occurred.
     """
     try:
         await conn.close()
         return True
     except Exception as e:
         print(f"Error closing connection: {e}")
-        return False
+        return None

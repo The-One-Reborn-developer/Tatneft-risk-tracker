@@ -1,8 +1,9 @@
 from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
+from app.database.queue.check_if_employee_exists import check_if_employee_exists
 
 
-async def create_employee(employee) -> bool:
+async def create_employee(employee) -> bool | None:
     """
     Create an employee in the database.
 
@@ -30,10 +31,15 @@ async def create_employee(employee) -> bool:
     Returns
     -------
     bool
-        True if the employee was added successfully, False if an error occurred.
+        True if the employee was added successfully, False if the employee already exists, None if an error occurred.
     """
     conn = await connect_to_database()
     try:
+        employee_exists = await check_if_employee_exists(employee['telegram_id'])
+
+        if employee_exists:
+            return False
+
         await conn.execute(
             """
             INSERT INTO employees
@@ -62,6 +68,6 @@ async def create_employee(employee) -> bool:
         return True
     except Exception as e:
         print(f"Error adding employee: {e}")
-        return False
+        return None
     finally:
         await close_connection(conn)
