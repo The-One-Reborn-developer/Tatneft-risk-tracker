@@ -152,9 +152,10 @@ def create_risk_task(risk) -> Literal[True] | None:
 @app.task
 def get_all_risks_levels_two_three_four_task() -> list[dict] | Literal[False] | None:
     """
-    Get a list of all request_number of risks of level two, three and four.
+    Get a list of all risks of level two, three and four.
 
-    Returns a list of dictionaries with request_number of all risks of level two, three and four if successful,
+    Returns a list of dictionaries, each dictionary containing the request number,
+    risk level, claimant Telegram ID and performer Telegram ID of a risk if successful,
     False if no risks of level two, three and four were found, or None if an error occurred.
     """
     from app.database.queue.get_all_risks_levels_two_three_four import get_all_risks_levels_two_three_four

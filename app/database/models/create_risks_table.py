@@ -10,8 +10,10 @@ async def create_risks_table() -> Literal[True] | None:
 
     Checks if 'risks' table already exists in the database. If it doesn't, creates it with the following columns:
     - id (SERIAL PRIMARY KEY)
-    - telegram_id (INT) with foreign key referencing 'employees' table
+    - claimant_telegram_id (INT) REFERENCES employees(telegram_id) ON DELETE CASCADE : the employee who submitted the request
+    - performer_telegram_id (INT) REFERENCES employees(telegram_id) ON DELETE CASCADE : the employee who resolves the request
     - discovery_date (DATE) : MSK time
+    - discovery_time (TIME) : MSK time
     - confirmation_date (DATE) with default value of NULL : MSK time
     - elimination_date (DATE) with default value of NULL : MSK time
     - risk_level (INT) with default value of 1
@@ -41,7 +43,8 @@ async def create_risks_table() -> Literal[True] | None:
 
         await conn.execute("""CREATE TABLE IF NOT EXISTS risks (
                            id SERIAL PRIMARY KEY,
-                           telegram_id INT REFERENCES employees(telegram_id) ON DELETE CASCADE,
+                           claimant_telegram_id INT REFERENCES employees(telegram_id) ON DELETE CASCADE,
+                           performer_telegram_id INT REFERENCES employees(telegram_id) ON DELETE CASCADE,
                            discovery_date DATE,
                            discovery_time TIME,
                            confirmation_date DATE DEFAULT NULL,
