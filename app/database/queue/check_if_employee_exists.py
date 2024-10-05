@@ -2,7 +2,7 @@ from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
 
-async def check_if_employee_exists(telegram_id: int) -> bool:
+async def check_if_employee_exists(telegram_id: int) -> bool | None:
     """
     Check if an employee with the given Telegram ID exists in the database.
 
@@ -37,5 +37,6 @@ async def check_if_employee_exists(telegram_id: int) -> bool:
             return False
     except Exception as e:
         print(f"Error checking if employee exists: {e}")
+        return None
     finally:
         await close_connection(conn)

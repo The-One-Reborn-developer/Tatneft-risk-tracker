@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 
-async def connect_to_database() -> asyncpg.connect:
+async def connect_to_database() -> asyncpg.connect | None:
     """
     Connects to the PostgreSQL database using environment variables.
 
@@ -13,16 +13,20 @@ async def connect_to_database() -> asyncpg.connect:
 
     Returns an asyncpg connection object.
     """
-    load_dotenv(find_dotenv())
+    try:
+        load_dotenv(find_dotenv())
 
-    database = os.getenv("POSTGRES_DB")
-    user = os.getenv("POSTGRES_USER")
-    password = os.getenv("POSTGRES_PASSWORD")
+        database = os.getenv("POSTGRES_DB")
+        user = os.getenv("POSTGRES_USER")
+        password = os.getenv("POSTGRES_PASSWORD")
 
-    conn = await asyncpg.connect(
-        host="localhost",
-        database=database,
-        user=user,
-        password=password
-    )
-    return conn
+        conn = await asyncpg.connect(
+            host="localhost",
+            database=database,
+            user=user,
+            password=password
+        )
+        return conn
+    except Exception as e:
+        print(f"Error connecting to database: {e}")
+        return None

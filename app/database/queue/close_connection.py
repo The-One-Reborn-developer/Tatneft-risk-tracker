@@ -8,5 +8,9 @@ async def close_connection(conn) -> bool:
     Returns:
         bool: True if the connection was closed successfully, False if an error occurred.
     """
-    await conn.close()
-    return True
+    try:
+        await conn.close()
+        return True
+    except Exception as e:
+        print(f"Error closing connection: {e}")
+        return False
