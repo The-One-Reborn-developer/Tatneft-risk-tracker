@@ -3,6 +3,25 @@ from app.database.queue.connect_to_database import connect_to_database
 
 
 async def create_risks_table() -> bool:
+    """
+    Create 'risks' table if it doesn't exist.
+
+    Checks if 'risks' table already exists in the database. If it doesn't, creates it with the following columns:
+    - id (SERIAL PRIMARY KEY)
+    - telegram_id (INT) with foreign key referencing 'employees' table
+    - discovery_date (DATE) : MSK time
+    - confirmation_date (DATE) with default value of NULL : MSK time
+    - elimination_date (DATE) with default value of NULL : MSK time
+    - risk_level (INT) with default value of 1
+    - risk_type (VARCHAR(255))
+    - risk_description (TEXT)
+    - risk_confirmed (BOOLEAN) with default value of NULL
+    - risk_eliminated (BOOLEAN) with default value of FALSE
+    - request_number (INT) : IntraService ticket number
+    - request_closed (BOOLEAN) with default value of FALSE
+
+    Returns True if the table was created successfully, False otherwise.
+    """
     conn = await connect_to_database()
     try:
         result = await conn.fetchval("""

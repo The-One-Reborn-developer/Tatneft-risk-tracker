@@ -3,6 +3,15 @@ from app.database.queue.close_connection import close_connection
 
 
 async def get_employees_rating() -> list | None:
+    """
+    Get a list of employees with their names, departments, positions and ratings,
+    sorted in descending order of rating.
+
+    Returns:
+        list | None: A list of dictionaries, each dictionary containing the full name,
+            department, position and rating of an employee. If an error occurs,
+            returns None.
+    """
     conn = await connect_to_database()
     try:
         result = await conn.fetch(

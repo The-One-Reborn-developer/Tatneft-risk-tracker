@@ -5,6 +5,29 @@ from app.database.queue.close_connection import close_connection
 
 
 async def add_risk(risk) -> bool:
+    """
+    Add a risk to the database.
+
+    Parameters
+    ----------
+    risk : dict
+        A dictionary with the following keys:
+            telegram_id : int
+                The Telegram ID of the employee who discovered the risk.
+            discovery_date : str
+                The date of risk discovery in the format '%Y-%m-%d'.
+            risk_type : str
+                The type of risk.
+            risk_description : str
+                A description of the risk.
+            request_number : int
+                The number of the request corresponding with the risk in IntraService.
+
+    Returns
+    -------
+    bool
+        True if the risk was added successfully, False otherwise.
+    """
     conn = await connect_to_database()
     # Convert discovery_date from string to datetime.date
     discovery_date = datetime.datetime.strptime(risk['discovery_date'], '%Y-%m-%d').date()
