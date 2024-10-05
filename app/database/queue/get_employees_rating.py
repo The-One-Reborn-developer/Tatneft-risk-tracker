@@ -12,6 +12,7 @@ async def get_employees_rating() -> list | None:
             department, position and rating of an employee. If an error occurs,
             returns None.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         result = await conn.fetch(

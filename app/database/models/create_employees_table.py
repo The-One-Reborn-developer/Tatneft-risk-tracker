@@ -35,6 +35,7 @@ async def create_employees_table() -> bool | None:
 
     Returns True if the table was created successfully, False otherwise, or None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         result = await conn.fetchval("""

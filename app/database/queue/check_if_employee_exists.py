@@ -12,6 +12,7 @@ async def check_if_employee_exists(telegram_id: int) -> bool | None:
     Returns:
         bool: True if the employee exists, False otherwise, or None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         result = await conn.fetchval(

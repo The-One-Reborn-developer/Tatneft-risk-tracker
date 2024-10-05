@@ -28,6 +28,7 @@ async def create_risk(risk) -> bool | None:
     bool
         True if the risk was added successfully, None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     # Convert discovery_date from string to datetime.date
     discovery_date = datetime.datetime.strptime(risk['discovery_date'], '%Y-%m-%d').date()

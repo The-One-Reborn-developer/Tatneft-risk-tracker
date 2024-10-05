@@ -22,6 +22,7 @@ async def update_employee(telegram_id: int,
     Returns:
         bool: True if the employee was updated successfully, None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         if rating:

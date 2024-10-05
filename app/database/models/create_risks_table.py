@@ -22,6 +22,7 @@ async def create_risks_table() -> bool | None:
 
     Returns True if the table was created successfully, None otherwise.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         result = await conn.fetchval("""

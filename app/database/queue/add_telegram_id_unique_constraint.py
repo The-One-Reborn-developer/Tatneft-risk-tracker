@@ -11,6 +11,7 @@ async def add_telegram_id_unique_constraint() -> bool | None:
 
     Returns True if the unique constraint was added successfully, None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         # Execute the SQL command to add a unique constraint

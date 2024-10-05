@@ -33,6 +33,7 @@ async def create_employee(employee) -> bool | None:
     bool
         True if the employee was added successfully, False if the employee already exists, None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         employee_exists = await check_if_employee_exists(employee['telegram_id'])

@@ -22,6 +22,7 @@ async def connect_to_database() -> Optional[asyncpg.connect]:
         user = os.getenv("POSTGRES_USER")
         password = os.getenv("POSTGRES_PASSWORD")
 
+        conn = None
         conn = await asyncpg.connect(
             host="localhost",
             database=database,

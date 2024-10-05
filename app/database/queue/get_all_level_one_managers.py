@@ -8,6 +8,7 @@ async def get_all_level_one_managers() -> list | None:
 
     Returns a list of all chat IDs of level one managers if successful, None if an error occurred.
     """
+    conn = None
     conn = await connect_to_database()
     try:
         managers = await conn.fetch(
