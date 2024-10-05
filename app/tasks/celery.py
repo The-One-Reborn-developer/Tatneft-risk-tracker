@@ -7,10 +7,10 @@ app = celery.Celery('tasks', broker='redis://localhost:6379/0')
 app.conf.update(
     task_routes={
         'app.tasks.database_tasks.*': {'queue': 'database_tasks_queue'}
-    }
+    },
+    broker_connection_retry_on_startup=True,
+    result_backend='redis://localhost:6379/0'
 )
-
-app.conf.broker_connection_retry_on_startup = True
 
 
 @app.task
