@@ -145,3 +145,14 @@ def create_risk_task(risk) -> bool | None:
     """
     from app.database.queue.create_risk import create_risk
     return asyncio.run(create_risk(risk))
+
+
+@app.task
+def get_all_risks_levels_two_three_four_task() -> list | None:
+    """
+    Get a list of all request_number of risks of level two, three and four.
+
+    Returns a list of all request_number of risks of level two, three and four if successful, None if an error occurred.
+    """
+    from app.database.queue.get_all_risks_levels_two_three_four import get_all_risks_levels_two_three_four
+    return asyncio.run(get_all_risks_levels_two_three_four())
