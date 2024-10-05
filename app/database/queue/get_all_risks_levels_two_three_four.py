@@ -2,11 +2,12 @@ from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
 
-async def get_all_risks_levels_two_three_four() -> list | None:
+async def get_all_risks_levels_two_three_four() -> list[dict]| False | None:
     """
-    Get a list of all request_number of risks of level two, three and four.
+    Get a list of all risks of level two, three and four.
 
-    Returns a list of all request_number of risks of level two, three and four if successful, None if an error occurred.
+    Returns a list of dictionaries with request_number and risk_level of all risks of level two, three and four if successful,
+    False if no risks of level two, three and four were found, or None if an error occurred.
     """
     conn = None
     conn = await connect_to_database()
@@ -14,7 +15,7 @@ async def get_all_risks_levels_two_three_four() -> list | None:
         risks = await conn.fetch(
             """
             SELECT
-                request_number
+                request_number, risk_level
             FROM
                 risks
             WHERE
@@ -22,14 +23,15 @@ async def get_all_risks_levels_two_three_four() -> list | None:
             """
         )
 
-        request_numbers = [risk['request_number'] for risk in risks]
-
-        if not request_numbers:
+        if not risks:
             print("No risks of level two, three and four found")
-            return []
+            return False
+        
+        # Create a list of dictionaries with request_number and risk_level
+        risk_data = [{'request_number': risk['request_number'], 'risk_level': risk['risk_level']} for risk in risks]
 
-        print(f'Successfully fetched all risks of level two, three and four: {request_numbers}')
-        return request_numbers
+        print(f'Successfully fetched all risks of level two, three, and four: {risk_data}')
+        return risk_data
     except Exception as e:
         print(f"Error getting all risks of level two, three and four: {e}")
         return None

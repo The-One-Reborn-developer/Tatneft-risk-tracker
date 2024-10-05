@@ -25,7 +25,7 @@ def create_employees_table_task() -> bool | None:
 
 
 @app.task
-def create_risks_table_task() -> bool | None:
+def create_risks_table_task() -> True | None:
     """
     Creates the risks table in the PostgreSQL database.
 
@@ -112,14 +112,14 @@ def create_employee_task(employee) -> bool | None:
     Returns
     -------
     bool
-        True if the employee was added successfully, None if an error occurred.
+        True if the employee was added successfully, False if the employee already exists, None if an error occurred.
     """
     from app.database.queue.create_employee import create_employee
     return asyncio.run(create_employee(employee))
 
 
 @app.task
-def create_risk_task(risk) -> bool | None:
+def create_risk_task(risk) -> True | None:
     """
     Add a risk to the database.
 
@@ -148,11 +148,12 @@ def create_risk_task(risk) -> bool | None:
 
 
 @app.task
-def get_all_risks_levels_two_three_four_task() -> list | None:
+def get_all_risks_levels_two_three_four_task() -> list[dict] | False | None:
     """
     Get a list of all request_number of risks of level two, three and four.
 
-    Returns a list of all request_number of risks of level two, three and four if successful, None if an error occurred.
+    Returns a list of dictionaries with request_number of all risks of level two, three and four if successful,
+    False if no risks of level two, three and four were found, or None if an error occurred.
     """
     from app.database.queue.get_all_risks_levels_two_three_four import get_all_risks_levels_two_three_four
     return asyncio.run(get_all_risks_levels_two_three_four())

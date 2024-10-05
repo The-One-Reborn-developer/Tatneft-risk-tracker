@@ -1,4 +1,4 @@
-async def close_connection(conn) -> bool | None:
+async def close_connection(conn) -> True | None:
     """
     Closes the connection to the database.
 

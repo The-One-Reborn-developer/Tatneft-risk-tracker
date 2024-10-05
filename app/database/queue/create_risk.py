@@ -4,7 +4,7 @@ from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
 
-async def create_risk(risk) -> bool | None:
+async def create_risk(risk) -> True | None:
     """
     Add a risk to the database.
 
