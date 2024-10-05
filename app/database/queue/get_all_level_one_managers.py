@@ -4,10 +4,9 @@ from app.database.queue.close_connection import close_connection
 
 async def get_all_level_one_managers() -> list | None:
     """
-    Get a list of Telegram chat IDs of all employees with manager level 1.
+    Get a list of all chat IDs of level one managers.
 
-    Returns a list of dictionaries, each dictionary containing the 'chat_id' of a level 1 manager.
-    If an error occurs, returns None.
+    Returns a list of all chat IDs of level one managers if successful, None otherwise.
     """
     conn = await connect_to_database()
     try:
