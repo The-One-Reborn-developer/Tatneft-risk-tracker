@@ -52,4 +52,5 @@ async def update_employee(telegram_id: int,
         print(f"Error updating employee: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)

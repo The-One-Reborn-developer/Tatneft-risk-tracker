@@ -39,4 +39,5 @@ async def check_if_employee_exists(telegram_id: int) -> bool | None:
         print(f"Error checking if employee exists: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)

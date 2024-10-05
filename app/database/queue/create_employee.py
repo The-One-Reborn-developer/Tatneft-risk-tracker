@@ -70,4 +70,5 @@ async def create_employee(employee) -> bool | None:
         print(f"Error adding employee: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)

@@ -35,4 +35,5 @@ async def get_employees_rating() -> list | None:
         print(f"Error getting employees rating: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)

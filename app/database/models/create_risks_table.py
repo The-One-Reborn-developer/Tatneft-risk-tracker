@@ -58,4 +58,5 @@ async def create_risks_table() -> bool | None:
         print(f"Error creating Risks table: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)

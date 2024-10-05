@@ -28,4 +28,5 @@ async def get_all_level_one_managers() -> list | None:
         print(f"Error getting all level one managers: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)

@@ -23,4 +23,5 @@ async def add_telegram_id_unique_constraint() -> bool | None:
         print(f"Error adding unique constraint: {e}")
         return None
     finally:
-        await close_connection(conn)
+        if conn:
+            await close_connection(conn)
