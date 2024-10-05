@@ -32,12 +32,14 @@ async def create_risk(risk) -> bool | None:
     conn = await connect_to_database()
     # Convert discovery_date from string to datetime.date
     discovery_date = datetime.datetime.strptime(risk['discovery_date'], '%Y-%m-%d').date()
+    discovery_time = datetime.datetime.now().time()
     try:
         await conn.execute(
             """
             INSERT INTO risks
             (telegram_id,
             discovery_date,
+            discovery_time,
             risk_type,
             risk_description,
             request_number)
@@ -46,6 +48,7 @@ async def create_risk(risk) -> bool | None:
             """,
             risk['telegram_id'],
             discovery_date,
+            discovery_time,
             risk['risk_type'],
             risk['risk_description'],
             risk['request_number']
