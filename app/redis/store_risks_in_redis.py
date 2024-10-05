@@ -6,7 +6,7 @@ from typing import Literal
 from app.tasks.celery import get_all_risks_levels_two_three_four_task
 
 
-def store_risks_in_redis():
+def store_risks_in_redis() -> list[dict] | Literal[False] | None:
     # Initialize Redis connection
     """
     Store risks of level two, three and four in Redis.
