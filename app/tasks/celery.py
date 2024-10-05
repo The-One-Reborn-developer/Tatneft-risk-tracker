@@ -1,6 +1,8 @@
 import celery
 import asyncio
 
+from typing import Literal
+
 app = celery.Celery('tasks', broker='redis://localhost:6379/0')
 
 # Optional: Configure Celery settings
@@ -25,7 +27,7 @@ def create_employees_table_task() -> bool | None:
 
 
 @app.task
-def create_risks_table_task() -> True | None:
+def create_risks_table_task() -> Literal[True] | None:
     """
     Creates the risks table in the PostgreSQL database.
 
@@ -119,7 +121,7 @@ def create_employee_task(employee) -> bool | None:
 
 
 @app.task
-def create_risk_task(risk) -> True | None:
+def create_risk_task(risk) -> Literal[True] | None:
     """
     Add a risk to the database.
 
@@ -148,7 +150,7 @@ def create_risk_task(risk) -> True | None:
 
 
 @app.task
-def get_all_risks_levels_two_three_four_task() -> list[dict] | False | None:
+def get_all_risks_levels_two_three_four_task() -> list[dict] | Literal[False] | None:
     """
     Get a list of all request_number of risks of level two, three and four.
 

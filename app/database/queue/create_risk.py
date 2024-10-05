@@ -1,10 +1,12 @@
 import datetime
 
+from typing import Literal
+
 from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
 
-async def create_risk(risk) -> True | None:
+async def create_risk(risk) -> Literal[True] | None:
     """
     Add a risk to the database.
 

@@ -1,4 +1,7 @@
-async def close_connection(conn) -> True | None:
+from typing import Literal
+
+
+async def close_connection(conn) -> Literal[True] | None:
     """
     Closes the connection to the database.
 

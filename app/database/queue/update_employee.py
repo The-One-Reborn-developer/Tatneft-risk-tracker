@@ -1,3 +1,5 @@
+from typing import Literal
+
 from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
@@ -7,7 +9,7 @@ async def update_employee(telegram_id: int,
                           is_in_antirating: bool | None = None,
                           has_one_rating_reset: bool | None = None,
                           was_a_good_fellow: bool | None = None,
-                          banned: bool | None = None) -> True | None:
+                          banned: bool | None = None) -> Literal[True] | None:
     """
     Update an employee in the database.
 

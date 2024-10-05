@@ -1,8 +1,10 @@
+from typing import Literal
+
 from app.database.queue.connect_to_database import connect_to_database
 from app.database.queue.close_connection import close_connection
 
 
-async def get_all_risks_levels_two_three_four() -> list[dict]| False | None:
+async def get_all_risks_levels_two_three_four() -> list[dict]| Literal[False] | None:
     """
     Get a list of all risks of level two, three and four.
 

@@ -1,8 +1,10 @@
+from typing import Literal
+
 from app.database.queue.close_connection import close_connection
 from app.database.queue.connect_to_database import connect_to_database
 
 
-async def create_risks_table() -> True | None:
+async def create_risks_table() -> Literal[True] | None:
     """
     Create 'risks' table if it doesn't exist.
 

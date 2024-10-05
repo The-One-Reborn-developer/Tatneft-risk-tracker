@@ -1,6 +1,8 @@
 import redis
 import json
 
+from typing import Literal
+
 from app.tasks.celery import get_all_risks_levels_two_three_four_task
 
 

@@ -1,8 +1,10 @@
+from typing import Literal
+
 from app.database.queue.close_connection import close_connection
 from app.database.queue.connect_to_database import connect_to_database
 
 
-async def add_telegram_id_unique_constraint() -> True | None:
+async def add_telegram_id_unique_constraint() -> Literal[True] | None:
     """
     Add a unique constraint on telegram_id in employees table.
 
