@@ -3,10 +3,10 @@ import json
 
 from typing import Literal
 
-from app.tasks.celery import get_all_risks_levels_two_three_four_task
+from app.database.queue.get_all_risks_levels_two_three_four import get_all_risks_levels_two_three_four
 
 
-def store_risks_in_redis() -> list[dict] | Literal[False] | None:
+async def store_risks_in_redis() -> list[dict] | Literal[False] | None:
     """
     Store risks of level two, three and four in Redis.
 
@@ -20,15 +20,12 @@ def store_risks_in_redis() -> list[dict] | Literal[False] | None:
     
     # Activate the task to fetch the risks
     try:
-        risks = get_all_risks_levels_two_three_four_task.delay()
+        risks = await get_all_risks_levels_two_three_four()
 
-        # Wait for the task to complete and get the result
-        risks_data = risks.get(timeout=10)  # Adjust timeout if necessary
-
-        if risks_data:
+        if risks:
             # Convert the list of dictionaries (risk_data) to JSON and store it in Redis
-            r.set('risk_levels_two_three_four', json.dumps(risks_data))
-            print(f'Successfully stored risks in Redis: {risks_data}')
+            r.set('risk_levels_two_three_four', json.dumps(risks))
+            print(f'Successfully stored risks in Redis: {risks}')
             return True
         else:
             print("No risks of level two, three and four found")

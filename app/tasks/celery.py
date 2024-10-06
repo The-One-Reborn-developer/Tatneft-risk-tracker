@@ -150,13 +150,15 @@ def create_risk_task(risk) -> Literal[True] | None:
 
 
 @app.task
-def get_all_risks_levels_two_three_four_task() -> list[dict] | Literal[False] | None:
+def store_risks_in_redis_task() -> list[dict] | Literal[False] | None:
     """
-    Get a list of all risks of level two, three and four.
+    Store risks of level two, three and four in Redis.
 
-    Returns a list of dictionaries, each dictionary containing the request number,
-    risk level, claimant Telegram ID and performer Telegram ID of a risk if successful,
-    False if no risks of level two, three and four were found, or None if an error occurred.
+    This function first activates a Celery task to fetch the risks of level two, three and four.
+    It then waits for the task to complete and gets the result.
+    If the result is not None, it converts the list of dictionaries (risk_data) to JSON and stores it in Redis under the key 'risk_levels_two_three_four'.
+    If no risks of level two, three and four were found, it returns False.
+    If an error occurs, it returns None.
     """
-    from app.database.queue.get_all_risks_levels_two_three_four import get_all_risks_levels_two_three_four
-    return asyncio.run(get_all_risks_levels_two_three_four())
+    from app.redis.store_risks_in_redis import store_risks_in_redis
+    return asyncio.run(store_risks_in_redis())
