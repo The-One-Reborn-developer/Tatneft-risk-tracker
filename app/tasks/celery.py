@@ -1,6 +1,7 @@
-import celery
 import asyncio
+import celery
 
+from celery.schedules import crontab
 from typing import Literal
 
 app = celery.Celery('tasks', broker='redis://localhost:6379/0')
@@ -11,7 +12,18 @@ app.conf.update(
         'app.tasks.database_tasks.*': {'queue': 'database_tasks_queue'}
     },
     broker_connection_retry_on_startup=True,
-    result_backend='redis://localhost:6379/0'
+    result_backend='redis://localhost:6379/0',
+    beat_schedule={
+        'store_risks_task': {
+            'task': 'app.tasks.celery.store_risks_task',
+            'schedule': crontab(minute=0, hour=8),
+        },
+        'process_risks_task': {
+            'task': 'app.tasks.celery.process_risks_task',
+            'schedule': crontab(minute=30, hour=8),
+        }
+    },
+    timezone='Europe/Moscow'
 )
 
 
