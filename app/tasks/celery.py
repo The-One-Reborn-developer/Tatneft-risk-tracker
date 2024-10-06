@@ -133,6 +133,27 @@ def create_employee_task(employee) -> bool | None:
 
 
 @app.task
+def update_employee_task(telegram_id, **kwargs) -> Literal[True] | None:
+    """
+    Update an employee in the database.
+
+    Parameters
+    ----------
+    telegram_id : int
+        The Telegram ID of the employee to update.
+    kwargs : dict
+        A dictionary containing the fields to update and their new values.
+
+    Returns
+    -------
+    bool
+        True if the employee was updated successfully, None if an error occurred.
+    """
+    from app.database.queue.update_employee import update_employee
+    return asyncio.run(update_employee(telegram_id, **kwargs))
+
+
+@app.task
 def create_risk_task(risk) -> Literal[True] | None:
     """
     Add a risk to the database.
