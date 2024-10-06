@@ -10,7 +10,15 @@ A [TG bot]() for creating service tickets in IntraService.
 * Reports generation (in progress)
 
 ## DEPENDENCIES
-
+- [aiogram](https://github.com/aio-libs/aiohttp)
+- [python-dotenv](https://github.com/theskumar/python-dotenv)
+- [nginx](https://www.nginx.com/)
+- [certbot](https://certbot.eff.org/)
+- [uvicorn](https://www.uvicorn.org/)
+- [celery](https://github.com/celery/celery)
+- [redis](https://redis.io/)
+- [fastapi](https://fastapi.tiangolo.com/)
+- [postgresql](https://www.postgresql.org/)
 
 
 ## INSTALLATION
