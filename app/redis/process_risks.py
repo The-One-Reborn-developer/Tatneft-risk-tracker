@@ -4,7 +4,19 @@ import json
 from typing import Literal
 
 async def process_risks() -> bool | None:
-    # Initialize Redis connection
+    """
+    Process risks stored in Redis.
+
+    This function first gets the stored risks from Redis under the key 'risk_levels_two_three_four'.
+    If risks are found, it processes them by calling the corresponding function based on the risk level.
+    If no risks are found, it returns False.
+    If an error occurs, it returns None.
+
+    Returns
+    -------
+    bool | None
+        True if the risks were processed successfully, False if no risks were found, or None if an error occurred.
+    """
     r = redis.Redis(host='localhost', port=6379, db=0)
     
     try:
