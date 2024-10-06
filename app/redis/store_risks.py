@@ -6,7 +6,7 @@ from typing import Literal
 from app.database.queue.get_all_risks_levels_two_three_four import get_all_risks_levels_two_three_four
 
 
-async def store_risks_in_redis() -> list[dict] | Literal[False] | None:
+async def store_risks() -> list[dict] | Literal[False] | None:
     """
     Store risks of level two, three and four in Redis.
 

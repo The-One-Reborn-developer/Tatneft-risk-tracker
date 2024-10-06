@@ -150,7 +150,7 @@ def create_risk_task(risk) -> Literal[True] | None:
 
 
 @app.task
-def store_risks_in_redis_task() -> list[dict] | Literal[False] | None:
+def store_risks_task() -> list[dict] | Literal[False] | None:
     """
     Store risks of level two, three and four in Redis.
 
@@ -160,5 +160,19 @@ def store_risks_in_redis_task() -> list[dict] | Literal[False] | None:
     If no risks of level two, three and four were found, it returns False.
     If an error occurs, it returns None.
     """
-    from app.redis.store_risks_in_redis import store_risks_in_redis
-    return asyncio.run(store_risks_in_redis())
+    from app.redis.store_risks import store_risks
+    return asyncio.run(store_risks())
+
+
+@app.task
+def process_risks_task() -> bool | None:
+    """
+    Process risks in Redis.
+
+    This function first activates a Celery task to process risks in Redis.
+    It then waits for the task to complete and gets the result.
+    If the result is not None, it returns True.
+    If an error occurs, it returns None.
+    """
+    from app.redis.process_risks import process_risks
+    return asyncio.run(process_risks())
